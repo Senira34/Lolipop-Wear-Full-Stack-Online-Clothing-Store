@@ -1,8 +1,8 @@
 # Lolipop-Wear-Full-Stack-Online-Clothing-Store
 
 <img width="1898" height="865" alt="image" src="https://github.com/user-attachments/assets/607e66a7-edae-4a40-9488-2ddc5a41ed14" />
-<img width="400" height="500" alt="image" src="https://github.com/user-attachments/assets/b97624a6-0bb1-4598-9fba-2fc2e3f952e2" />
-<img width="400" height="500" alt="image" src="https://github.com/user-attachments/assets/d85abd10-28a7-4e85-9875-d0da19b71fc2" />
+<img width="410" height="500" alt="image" src="https://github.com/user-attachments/assets/b97624a6-0bb1-4598-9fba-2fc2e3f952e2" />
+<img width="410" height="500" alt="image" src="https://github.com/user-attachments/assets/d85abd10-28a7-4e85-9875-d0da19b71fc2" />
 <img width="1897" height="871" alt="image" src="https://github.com/user-attachments/assets/fbbe2e8e-12fa-4595-8806-f1319dbba90d" />
 
 

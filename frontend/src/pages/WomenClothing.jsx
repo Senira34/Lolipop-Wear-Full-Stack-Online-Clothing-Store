@@ -18,7 +18,7 @@ const WomenClothing = () => {
   useEffect(() => {
     const fetchWomensProducts = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/products/category/women')
+        const response = await fetch('/api/products/category/women')
         const data = await response.json()
         if (data.success) {
           setWomensClothing(data.data)

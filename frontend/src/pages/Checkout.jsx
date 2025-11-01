@@ -59,7 +59,7 @@ const CheckoutForm = () => {
 
     try {
       // Create payment intent on your backend
-      const response = await fetch('http://localhost:5000/api/orders/create-payment-intent', {
+      const response = await fetch('/api/orders/create-payment-intent', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -152,7 +152,7 @@ const CheckoutForm = () => {
 
           console.log('Order data being sent:', JSON.stringify(orderData, null, 2))
 
-          const orderResponse = await fetch('http://localhost:5000/api/orders', {
+          const orderResponse = await fetch('/api/orders', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

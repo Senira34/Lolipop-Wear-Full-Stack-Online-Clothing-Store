@@ -49,7 +49,7 @@ const MyOrders = () => {
       setLoading(true)
       setError(null)
       
-      const endpoint = `http://localhost:5000/api/orders/user/${user._id}`
+      const endpoint = `/api/orders/user/${user._id}`
       const response = await fetch(endpoint)
       const data = await response.json()
 

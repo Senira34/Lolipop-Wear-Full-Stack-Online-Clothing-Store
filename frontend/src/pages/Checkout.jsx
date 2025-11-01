@@ -6,8 +6,10 @@ import { useNotification } from '../context/NotificationContext'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 
-// Initialize Stripe (Replace with your actual publishable key)
-const stripePromise = loadStripe('pk_test_51SNIm4LMZRE9GXBfXiJ9XlZYnRHOg4SqUN8N5tezCWKEDFQ24mZALXi0To9NdwGlGTkGUp1bs0FZetOa1L5CtAMM00IVh12VLz')
+// Initialize Stripe with publishable key from environment variable
+// Local: Set VITE_STRIPE_PUBLISHABLE_KEY in frontend/.env.local
+// Production: Set in Vercel environment variables
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 'pk_test_51SNIm4LMZRE9GXBfXiJ9XlZYnRHOg4SqUN8N5tezCWKEDFQ24mZALXi0To9NdwGlGTkGUp1bs0FZetOa1L5CtAMM00IVh12VLz')
 
 const CheckoutForm = () => {
   const navigate = useNavigate()

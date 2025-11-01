@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext'
 import { useNotification } from '../context/NotificationContext'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
+import { API_URL } from '../services/api'
 
 // Initialize Stripe with publishable key from environment variable
 // Local: Set VITE_STRIPE_PUBLISHABLE_KEY in frontend/.env.local
@@ -61,7 +62,7 @@ const CheckoutForm = () => {
 
     try {
       // Create payment intent on your backend
-      const response = await fetch('/api/orders/create-payment-intent', {
+      const response = await fetch(`${API_URL}/orders/create-payment-intent`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -154,7 +155,7 @@ const CheckoutForm = () => {
 
           console.log('Order data being sent:', JSON.stringify(orderData, null, 2))
 
-          const orderResponse = await fetch('/api/orders', {
+          const orderResponse = await fetch(`${API_URL}/orders`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

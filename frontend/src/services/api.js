@@ -3,6 +3,9 @@
 // In production (Vercel): /api (same domain)
 const API_URL = import.meta.env.VITE_API_URL || '/api';
 
+// Export for use in other components
+export { API_URL };
+
 // ============================================
 // PRODUCT API CALLS
 // ============================================

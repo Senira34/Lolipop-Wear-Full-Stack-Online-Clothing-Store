@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
+import { API_URL } from '../services/api'
 
 function Dashboard() {
   const { user, isAdmin } = useAuth()
@@ -48,7 +49,7 @@ function Dashboard() {
   const fetchProducts = async () => {
     setLoading(true)
     try {
-      const response = await fetch('/api/products')
+      const response = await fetch(`${API_URL}/products`)
       const data = await response.json()
       if (data.success) {
         setProducts(data.data)
@@ -64,9 +65,9 @@ function Dashboard() {
   const fetchStats = async () => {
     try {
       const [productsRes, ordersRes, usersRes] = await Promise.all([
-        fetch('/api/products'),
-        fetch('/api/orders'),
-        fetch('/api/users')
+        fetch(`${API_URL}/products`),
+        fetch(`${API_URL}/orders`),
+        fetch(`${API_URL}/users`)
       ])
       
       const [productsData, ordersData, usersData] = await Promise.all([
@@ -88,7 +89,7 @@ function Dashboard() {
   const fetchOrders = async () => {
     setLoading(true)
     try {
-      const response = await fetch('/api/orders')
+      const response = await fetch(\/orders')
       const data = await response.json()
       if (data.success) setOrders(data.data)
     } catch (err) {
@@ -256,7 +257,7 @@ function Dashboard() {
 
       const url = editingProduct 
         ? `/api/products/${editingProduct.id}`
-        : '/api/products'
+        : \/products'
       
       const method = editingProduct ? 'PUT' : 'POST'
 

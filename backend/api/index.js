@@ -56,10 +56,22 @@ app.get('/', (req, res) => {
   });
 });
 
-// API Routes
-app.use('/api/products', productRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/orders', orderRoutes);
+app.get('/api', (req, res) => {
+  res.json({ 
+    message: 'Welcome to Lolipop Wear API',
+    status: 'Server is running',
+    endpoints: {
+      products: '/api/products',
+      users: '/api/users',
+      orders: '/api/orders'
+    }
+  });
+});
+
+// API Routes - NO /api prefix here because Vercel rewrite already adds it
+app.use('/products', productRoutes);
+app.use('/users', userRoutes);
+app.use('/orders', orderRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

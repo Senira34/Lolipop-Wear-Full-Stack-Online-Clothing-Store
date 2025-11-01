@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { API_URL } from '../services/api'
 
 function Mens() {
   const navigate = useNavigate()
@@ -10,7 +11,7 @@ function Mens() {
   useEffect(() => {
     const fetchMensProducts = async () => {
       try {
-        const response = await fetch('/api/products/category/men')
+        const response = await fetch(`${API_URL}/products/category/men`)
         const data = await response.json()
         
         if (data.success) {

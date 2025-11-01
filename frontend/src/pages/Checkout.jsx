@@ -7,7 +7,7 @@ import { loadStripe } from '@stripe/stripe-js'
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 
 // Initialize Stripe (Replace with your actual publishable key)
-const stripePromise = loadStripe('pk_test_51SNIm4LMZRE9GXBfPCIiYjvWI21KQ3QxIsOr2ksdsWEwm4eagIUrG5ZhGVxqPwt7NXwtwG8AcTqyiT0Btj8VJfUm00K51ghleP')
+const stripePromise = loadStripe('pk_test_51SNIm4LMZRE9GXBfXiJ9XlZYnRHOg4SqUN8N5tezCWKEDFQ24mZALXi0To9NdwGlGTkGUp1bs0FZetOa1L5CtAMM00IVh12VLz')
 
 const CheckoutForm = () => {
   const navigate = useNavigate()

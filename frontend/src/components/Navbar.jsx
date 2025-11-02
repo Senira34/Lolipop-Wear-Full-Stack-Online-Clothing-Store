@@ -88,7 +88,7 @@ function Navbar() {
               
               {/* Dropdown Menu */}
               {showUserMenu && (
-                <div className="absolute right-0 top-full mt-2 w-64 bg-white rounded-lg shadow-2xl border border-gray-200 py-2 z-[9999]" style={{ position: 'absolute' }}>
+                <div className="absolute right-0 top-full mt-2 w-64 bg-white rounded-lg shadow-2xl border border-gray-200 py-2 z-9999" style={{ position: 'absolute' }}>
                   <div className="px-4 py-3 border-b border-gray-200">
                     <p className="text-sm font-semibold text-gray-900 truncate">{user.name}</p>
                     <p className="text-xs text-gray-500 mt-0.5 truncate" title={user.email}>{user.email}</p>

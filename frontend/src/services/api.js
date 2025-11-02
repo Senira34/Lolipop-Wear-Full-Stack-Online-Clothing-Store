@@ -1,5 +1,5 @@
-// Base API URL - Change this if your backend runs on different port
-const API_URL = 'http://localhost:5000/api';
+// Base API URL - Uses environment variable or defaults to /api for production
+export const API_URL = import.meta.env.VITE_API_URL || '/api';
 
 // ============================================
 // PRODUCT API CALLS

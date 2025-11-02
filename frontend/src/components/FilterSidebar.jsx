@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { API_URL } from '../services/api'
 
 const FilterSidebar = ({ 
   gender, 
@@ -26,7 +27,7 @@ const FilterSidebar = ({
   useEffect(() => {
     const fetchFilters = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/products/filters/${gender}`)
+        const response = await fetch(`${API_URL}/products/filters/${gender}`)
         const data = await response.json()
         
         if (data.success) {

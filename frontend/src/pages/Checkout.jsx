@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext'
 import { useNotification } from '../context/NotificationContext'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
+import { API_URL } from '../services/api'
 
 // Initialize Stripe (Replace with your actual publishable key)
 const stripePromise = loadStripe('pk_test_51SNIm4LMZRE9GXBfPCIiYjvWI21KQ3QxIsOr2ksdsWEwm4eagIUrG5ZhGVxqPwt7NXwtwG8AcTqyiT0Btj8VJfUm00K51ghleP')
@@ -59,7 +60,7 @@ const CheckoutForm = () => {
 
     try {
       // Create payment intent on your backend
-      const response = await fetch('http://localhost:5000/api/orders/create-payment-intent', {
+      const response = await fetch(`${API_URL}/orders/create-payment-intent`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -152,7 +153,7 @@ const CheckoutForm = () => {
 
           console.log('Order data being sent:', JSON.stringify(orderData, null, 2))
 
-          const orderResponse = await fetch('http://localhost:5000/api/orders', {
+          const orderResponse = await fetch(`${API_URL}/orders`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

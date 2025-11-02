@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { API_URL } from '../services/api'
 
 // --- Reusable Button Styles ---
 const btnBase = "inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-medium transition"
@@ -49,7 +50,7 @@ const MyOrders = () => {
       setLoading(true)
       setError(null)
       
-      const endpoint = `http://localhost:5000/api/orders/user/${user._id}`
+      const endpoint = `${API_URL}/orders/user/${user._id}`
       const response = await fetch(endpoint)
       const data = await response.json()
 
@@ -165,7 +166,7 @@ const ErrorMessage = ({ error, onRetry }) => (
 const SuccessMessage = ({ message, onClose }) => (
   <div className="mb-6 bg-green-50 border-l-4 border-green-500 p-4 rounded-lg shadow-sm">
     <div className="flex items-start">
-      <div className="flex-shrink-0">
+      <div className="shrink-0">
         <IconCheck className="h-6 w-6 text-green-500" />
       </div>
       <div className="ml-3 flex-1">

@@ -103,7 +103,7 @@ const NotificationItem = ({ notification, onRemove }) => {
       }}
     >
       {/* Icon */}
-      <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${styles.icon}`}>
+      <div className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${styles.icon}`}>
         {getIcon()}
       </div>
 
@@ -115,7 +115,7 @@ const NotificationItem = ({ notification, onRemove }) => {
       {/* Close Button */}
       <button
         onClick={handleClose}
-        className="flex-shrink-0 text-current opacity-70 hover:opacity-100 transition-opacity"
+        className="shrink-0 text-current opacity-70 hover:opacity-100 transition-opacity"
         aria-label="Close notification"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -142,7 +142,7 @@ const NotificationContainer = () => {
   const { notifications, removeNotification } = useNotification()
 
   return (
-    <div className="fixed top-4 right-4 z-[9999] flex flex-col gap-3 pointer-events-none">
+    <div className="fixed top-4 right-4 z-9999 flex flex-col gap-3 pointer-events-none">
       <style>
         {`
           @keyframes shrink {

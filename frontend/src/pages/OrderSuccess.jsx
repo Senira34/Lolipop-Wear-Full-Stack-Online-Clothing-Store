@@ -28,7 +28,7 @@ const OrderSuccess = () => {
       <div className="max-w-3xl mx-auto">
         {/* Success Header */}
         <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-4">
-          <div className="bg-gradient-to-r from-green-500 to-emerald-600 px-6 py-4">
+          <div className="bg-linear-to-r from-green-500 to-emerald-600 px-6 py-4">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shrink-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-green-600">
@@ -239,7 +239,7 @@ const OrderSuccess = () => {
             </div>
 
             {/* What's Next */}
-            <div className="mt-6 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-4">
+            <div className="mt-6 bg-linear-to-r from-indigo-50 to-purple-50 rounded-lg p-4">
               <h3 className="font-bold text-gray-800 mb-3 text-base">📦 What's Next?</h3>
               <ul className="space-y-2.5">
                 <li className="flex items-start gap-2.5">

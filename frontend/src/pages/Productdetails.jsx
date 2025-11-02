@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
+import { useNotification } from '../context/NotificationContext'
+import { API_URL } from '../services/api'
 
-const Productdetails = () => {
+function Productdetails() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { addToCart, buyNow } = useCart()
@@ -22,7 +24,7 @@ const Productdetails = () => {
     
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/products/${id}`)
+        const response = await fetch(`${API_URL}/products/${id}`)
         const data = await response.json()
         
         if (data.success) {

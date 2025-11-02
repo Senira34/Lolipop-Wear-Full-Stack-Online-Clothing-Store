@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import FilterSidebar from '../components/FilterSidebar'
 import { API_URL } from '../services/api'
 
-const MensClothing = () => {
+function MensClothing() {
   const navigate = useNavigate()
   const [mensClothing, setMensClothing] = useState([])
   const [filteredProducts, setFilteredProducts] = useState([])

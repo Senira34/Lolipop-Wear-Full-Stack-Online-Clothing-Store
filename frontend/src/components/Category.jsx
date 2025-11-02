@@ -15,7 +15,7 @@ const Category = () => {
             alt="Men's Collection"
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
             <h2 className="text-5xl font-bold text-white mb-6">MEN'S</h2>
             <Link to="/men" className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-3 rounded-md transition-all active:scale-95">
@@ -31,7 +31,7 @@ const Category = () => {
             alt="Women's Collection"
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
             <h2 className="text-5xl font-bold text-white mb-6">WOMEN'S</h2>
             <Link to="/women" className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-3 rounded-md transition-all active:scale-95">

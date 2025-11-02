@@ -2,8 +2,8 @@
   "name": "lolipop-wear-monorepo",
   "version": "1.0.0",
   "private": true,
-  "scripts": {
-    "build": "npm --prefix frontend install && npm --prefix frontend run build",
-    "install": "npm --prefix frontend install && npm --prefix backend install"
-  }
+  "workspaces": [
+    "frontend",
+    "backend"
+  ]
 }

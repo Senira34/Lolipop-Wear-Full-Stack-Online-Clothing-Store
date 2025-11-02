@@ -33,6 +33,7 @@ function WomenClothing() {
     }
 
     fetchWomensProducts()
+    window.scrollTo(0, 0);
   }, [])
 
   // Apply filters whenever filter criteria changes

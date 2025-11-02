@@ -5,12 +5,9 @@ import { useAuth } from '../context/AuthContext'
 import { useNotification } from '../context/NotificationContext'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
-import { API_URL } from '../services/api'
 
-// Initialize Stripe with publishable key from environment variable
-// Local: Set VITE_STRIPE_PUBLISHABLE_KEY in frontend/.env.local
-// Production: Set in Vercel environment variables
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 'pk_test_51SNIm4LMZRE9GXBfXiJ9XlZYnRHOg4SqUN8N5tezCWKEDFQ24mZALXi0To9NdwGlGTkGUp1bs0FZetOa1L5CtAMM00IVh12VLz')
+// Initialize Stripe (Replace with your actual publishable key)
+const stripePromise = loadStripe('pk_test_51SNIm4LMZRE9GXBfPCIiYjvWI21KQ3QxIsOr2ksdsWEwm4eagIUrG5ZhGVxqPwt7NXwtwG8AcTqyiT0Btj8VJfUm00K51ghleP')
 
 const CheckoutForm = () => {
   const navigate = useNavigate()
@@ -62,7 +59,7 @@ const CheckoutForm = () => {
 
     try {
       // Create payment intent on your backend
-      const response = await fetch(`${API_URL}/orders/create-payment-intent`, {
+      const response = await fetch('http://localhost:5000/api/orders/create-payment-intent', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -155,7 +152,7 @@ const CheckoutForm = () => {
 
           console.log('Order data being sent:', JSON.stringify(orderData, null, 2))
 
-          const orderResponse = await fetch(`${API_URL}/orders`, {
+          const orderResponse = await fetch('http://localhost:5000/api/orders', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

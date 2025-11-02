@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
-import { API_URL } from '../services/api'
 
 function Dashboard() {
   const { user, isAdmin } = useAuth()
@@ -49,7 +48,7 @@ function Dashboard() {
   const fetchProducts = async () => {
     setLoading(true)
     try {
-      const response = await fetch(`${API_URL}/products`)
+      const response = await fetch('http://localhost:5000/api/products')
       const data = await response.json()
       if (data.success) {
         setProducts(data.data)
@@ -65,9 +64,9 @@ function Dashboard() {
   const fetchStats = async () => {
     try {
       const [productsRes, ordersRes, usersRes] = await Promise.all([
-        fetch(`${API_URL}/products`),
-        fetch(`${API_URL}/orders`),
-        fetch(`${API_URL}/users`)
+        fetch('http://localhost:5000/api/products'),
+        fetch('http://localhost:5000/api/orders'),
+        fetch('http://localhost:5000/api/users')
       ])
       
       const [productsData, ordersData, usersData] = await Promise.all([
@@ -89,7 +88,7 @@ function Dashboard() {
   const fetchOrders = async () => {
     setLoading(true)
     try {
-      const response = await fetch(`${API_URL}/orders`)
+      const response = await fetch('http://localhost:5000/api/orders')
       const data = await response.json()
       if (data.success) setOrders(data.data)
     } catch (err) {
@@ -101,7 +100,7 @@ function Dashboard() {
 
   const updateOrderStatus = async (orderId, newStatus) => {
     try {
-      const response = await fetch(`${API_URL}/orders/${orderId}/status`, {
+      const response = await fetch(`http://localhost:5000/api/orders/${orderId}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus })
@@ -123,7 +122,7 @@ function Dashboard() {
   const handleDeleteOrder = async (orderId) => {
     if (!window.confirm('Are you sure you want to delete this order?')) return
     try {
-      const response = await fetch(`${API_URL}/orders/${orderId}`, {
+      const response = await fetch(`http://localhost:5000/api/orders/${orderId}`, {
         method: 'DELETE'
       })
       const data = await response.json()
@@ -256,8 +255,8 @@ function Dashboard() {
       }
 
       const url = editingProduct 
-        ? `${API_URL}/products/${editingProduct.id}`
-        : `${API_URL}/products`
+        ? `http://localhost:5000/api/products/${editingProduct.id}`
+        : 'http://localhost:5000/api/products'
       
       const method = editingProduct ? 'PUT' : 'POST'
 
@@ -299,7 +298,7 @@ function Dashboard() {
   const handleDeleteProduct = async (productId) => {
     if (!window.confirm('Are you sure you want to delete this product?')) return
     try {
-      const response = await fetch(`${API_URL}/products/${productId}`, {
+      const response = await fetch(`http://localhost:5000/api/products/${productId}`, {
         method: 'DELETE'
       })
       const data = await response.json()

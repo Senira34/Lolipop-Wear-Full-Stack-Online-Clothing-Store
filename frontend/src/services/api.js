@@ -1,10 +1,5 @@
-// Base API URL - Use environment variable for flexibility
-// In development: http://localhost:5000/api
-// In production (Vercel): /api (same domain)
-const API_URL = import.meta.env.VITE_API_URL || '/api';
-
-// Export for use in other components
-export { API_URL };
+// Base API URL - Change this if your backend runs on different port
+const API_URL = 'http://localhost:5000/api';
 
 // ============================================
 // PRODUCT API CALLS

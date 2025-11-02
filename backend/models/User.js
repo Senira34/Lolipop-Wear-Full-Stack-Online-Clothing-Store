@@ -52,14 +52,10 @@ const userSchema = new mongoose.Schema({
 });
 
 // Hash password before saving
-// Use an async middleware that returns a promise instead of calling next(),
-// and return early if the password wasn't modified.
-userSchema.pre('save', async function() {
-  // If password wasn't modified, do nothing
+userSchema.pre('save', async function(next) {
   if (!this.isModified('password')) {
-    return;
+    next();
   }
-
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });

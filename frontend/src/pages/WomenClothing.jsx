@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import FilterSidebar from '../components/FilterSidebar'
-import { API_URL } from '../services/api'
 
 const WomenClothing = () => {
   const navigate = useNavigate()
@@ -19,7 +18,7 @@ const WomenClothing = () => {
   useEffect(() => {
     const fetchWomensProducts = async () => {
       try {
-        const response = await fetch(`${API_URL}/products/category/women`)
+        const response = await fetch('http://localhost:5000/api/products/category/women')
         const data = await response.json()
         if (data.success) {
           setWomensClothing(data.data)

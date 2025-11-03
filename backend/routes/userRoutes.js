@@ -139,12 +139,27 @@ router.put('/profile/:id', async (req, res) => {
       });
     }
 
+    // Update basic fields
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
     user.phone = req.body.phone || user.phone;
     
+    // Update password if provided
     if (req.body.password) {
       user.password = req.body.password;
+    }
+
+    // Update address if provided
+    if (req.body.address) {
+      // If address is a string, create a simple address object
+      if (typeof req.body.address === 'string') {
+        user.address = [{
+          street: req.body.address,
+          isDefault: true
+        }];
+      } else if (Array.isArray(req.body.address)) {
+        user.address = req.body.address;
+      }
     }
 
     const updatedUser = await user.save();
@@ -155,7 +170,9 @@ router.put('/profile/:id', async (req, res) => {
         _id: updatedUser._id,
         name: updatedUser.name,
         email: updatedUser.email,
-        role: updatedUser.role
+        phone: updatedUser.phone,
+        role: updatedUser.role,
+        address: updatedUser.address
       }
     });
   } catch (error) {

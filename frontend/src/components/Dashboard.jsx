@@ -9,11 +9,14 @@ function Dashboard() {
   const [activeTab, setActiveTab] = useState('overview')
   const [products, setProducts] = useState([])
   const [orders, setOrders] = useState([])
+  const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(false)
   const [showAddProduct, setShowAddProduct] = useState(false)
   const [editingProduct, setEditingProduct] = useState(null)
   const [selectedOrder, setSelectedOrder] = useState(null)
   const [showOrderDetails, setShowOrderDetails] = useState(false)
+  const [editingUser, setEditingUser] = useState(null)
+  const [showEditUser, setShowEditUser] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   
@@ -99,6 +102,83 @@ function Dashboard() {
     }
   }
 
+  const fetchUsers = async () => {
+    setLoading(true)
+    try {
+      const response = await fetch(`${API_URL}/users`)
+      const data = await response.json()
+      if (data.success) {
+        setUsers(data.data)
+        setStats(prev => ({ ...prev, totalUsers: data.data.length }))
+      }
+    } catch (err) {
+      setError('Failed to fetch users')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleEditUser = (user) => {
+    setEditingUser({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin || false
+    })
+    setShowEditUser(true)
+  }
+
+  const handleUpdateUser = async (e) => {
+    e.preventDefault()
+    setLoading(true)
+    try {
+      const response = await fetch(`${API_URL}/users/${editingUser._id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: editingUser.name,
+          email: editingUser.email,
+          isAdmin: editingUser.isAdmin
+        })
+      })
+      const data = await response.json()
+      if (data.success) {
+        setSuccess('User updated successfully!')
+        setShowEditUser(false)
+        setEditingUser(null)
+        fetchUsers()
+        fetchStats()
+        setTimeout(() => setSuccess(''), 3000)
+      } else {
+        setError(data.message || 'Failed to update user')
+      }
+    } catch (err) {
+      setError('Failed to update user')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleDeleteUser = async (userId) => {
+    if (!window.confirm('Are you sure you want to delete this user?')) return
+    try {
+      const response = await fetch(`${API_URL}/users/${userId}`, {
+        method: 'DELETE'
+      })
+      const data = await response.json()
+      if (data.success) {
+        setSuccess('User deleted successfully!')
+        fetchUsers()
+        fetchStats()
+        setTimeout(() => setSuccess(''), 3000)
+      } else {
+        setError(data.message || 'Failed to delete user')
+      }
+    } catch (err) {
+      setError('Failed to delete user')
+    }
+  }
+
   const updateOrderStatus = async (orderId, newStatus) => {
     try {
       const response = await fetch(`${API_URL}/orders/${orderId}/status`, {
@@ -143,6 +223,7 @@ function Dashboard() {
   useEffect(() => {
     if (activeTab === 'products') fetchProducts()
     else if (activeTab === 'orders') fetchOrders()
+    else if (activeTab === 'users') fetchUsers()
     else if (activeTab === 'overview') fetchStats()
   }, [activeTab])
 
@@ -402,7 +483,7 @@ function Dashboard() {
         {/* Tabs */}
         <div className="bg-white rounded-xl shadow mb-6">
           <div className="flex gap-4 p-4 border-b">
-            {['overview', 'products', 'orders'].map(tab => (
+            {['overview', 'products', 'orders', 'users'].map(tab => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -621,8 +702,8 @@ function Dashboard() {
                           <h3 className="font-semibold mb-1">{product.name}</h3>
                           <p className="text-sm text-gray-500 mb-2">{product.category}</p>
                           <div className="flex items-center gap-2 mb-3">
-                            <span className="text-lg font-bold text-indigo-600">${product.offerPrice || product.price}</span>
-                            {product.offerPrice && <span className="text-sm text-gray-400 line-through">${product.price}</span>}
+                            <span className="text-lg font-bold text-indigo-600">Rs{product.offerPrice || product.price}</span>
+                            {product.offerPrice && <span className="text-sm text-gray-400 line-through">Rs{product.price}</span>}
                           </div>
                           <div className="flex gap-2">
                             <button onClick={() => handleEditProduct(product)} 
@@ -795,7 +876,7 @@ function Dashboard() {
                                   <p className="font-medium">{item.product?.name}</p>
                                   <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
                                 </div>
-                                <p className="font-semibold">${(item.price * item.quantity).toFixed(2)}</p>
+                                <p className="font-semibold">Rs{(item.price * item.quantity).toFixed(2)}</p>
                               </div>
                             ))}
                           </div>
@@ -804,7 +885,7 @@ function Dashboard() {
                         <div className="bg-indigo-50 rounded-lg p-4">
                           <div className="flex justify-between items-center">
                             <p className="font-semibold">Total Amount</p>
-                            <p className="text-2xl font-bold text-indigo-600">${selectedOrder.totalPrice?.toFixed(2)}</p>
+                            <p className="text-2xl font-bold text-indigo-600">Rs{selectedOrder.totalPrice?.toFixed(2)}</p>
                           </div>
                         </div>
                       </div>
@@ -813,6 +894,156 @@ function Dashboard() {
                         className="w-full mt-6 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-medium">
                         Close
                       </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Users Tab */}
+            {activeTab === 'users' && (
+              <div>
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="text-2xl font-bold">Manage Users</h2>
+                  <div className="text-sm text-gray-600">
+                    Total Users: <span className="font-semibold text-indigo-600">{users.length}</span>
+                  </div>
+                </div>
+
+                {loading ? (
+                  <div className="text-center py-12">
+                    <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+                  </div>
+                ) : users.length === 0 ? (
+                  <div className="text-center py-12 text-gray-600">No users found.</div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="w-full bg-white border rounded-xl">
+                      <thead className="bg-gray-50 border-b">
+                        <tr>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Role</th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Joined</th>
+                          <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y">
+                        {users.map(user => (
+                          <tr key={user._id} className="hover:bg-gray-50">
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="flex items-center">
+                                <div className="shrink-0 h-10 w-10 bg-indigo-100 rounded-full flex items-center justify-center">
+                                  <span className="text-indigo-600 font-medium">{user.name?.charAt(0).toUpperCase()}</span>
+                                </div>
+                                <div className="ml-4">
+                                  <div className="text-sm font-medium text-gray-900">{user.name}</div>
+                                </div>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="text-sm text-gray-900">{user.email}</div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                                user.isAdmin ? 'bg-purple-100 text-purple-800' : 'bg-green-100 text-green-800'
+                              }`}>
+                                {user.isAdmin ? 'Admin' : 'User'}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {new Date(user.createdAt).toLocaleDateString('en-US', { 
+                                year: 'numeric', month: 'short', day: 'numeric'
+                              })}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                              <button
+                                onClick={() => handleEditUser(user)}
+                                className="text-indigo-600 hover:text-indigo-900 mr-4"
+                              >
+                                Edit
+                              </button>
+                              <button
+                                onClick={() => handleDeleteUser(user._id)}
+                                className="text-red-600 hover:text-red-900"
+                                disabled={user._id === user._id}
+                              >
+                                Delete
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+                {/* Edit User Modal */}
+                {showEditUser && editingUser && (
+                  <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+                    <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6">
+                      <div className="flex justify-between items-center mb-6">
+                        <h3 className="text-2xl font-bold text-indigo-600">Edit User</h3>
+                        <button onClick={() => { setShowEditUser(false); setEditingUser(null) }}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                          </svg>
+                        </button>
+                      </div>
+
+                      <form onSubmit={handleUpdateUser} className="space-y-4">
+                        <div>
+                          <label className="block text-sm font-medium mb-1">Name</label>
+                          <input
+                            type="text"
+                            value={editingUser.name}
+                            onChange={(e) => setEditingUser({ ...editingUser, name: e.target.value })}
+                            className="w-full border rounded-lg px-4 py-2"
+                            required
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-medium mb-1">Email</label>
+                          <input
+                            type="email"
+                            value={editingUser.email}
+                            onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })}
+                            className="w-full border rounded-lg px-4 py-2"
+                            required
+                          />
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="checkbox"
+                            id="isAdmin"
+                            checked={editingUser.isAdmin}
+                            onChange={(e) => setEditingUser({ ...editingUser, isAdmin: e.target.checked })}
+                            className="w-4 h-4 text-indigo-600 border-gray-300 rounded"
+                          />
+                          <label htmlFor="isAdmin" className="text-sm font-medium">
+                            Admin Privileges
+                          </label>
+                        </div>
+
+                        <div className="flex gap-4 pt-4">
+                          <button
+                            type="submit"
+                            disabled={loading}
+                            className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-medium disabled:opacity-50"
+                          >
+                            {loading ? 'Updating...' : 'Update User'}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => { setShowEditUser(false); setEditingUser(null) }}
+                            className="px-6 py-3 border text-gray-700 rounded-lg font-medium hover:bg-gray-50"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </form>
                     </div>
                   </div>
                 )}

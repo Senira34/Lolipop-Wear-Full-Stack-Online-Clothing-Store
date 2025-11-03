@@ -6,6 +6,7 @@ const Cart = () => {
   const navigate = useNavigate()
   const { cartItems, updateQuantity, removeFromCart, getCartTotal } = useCart()
   const [promoCode, setPromoCode] = useState('')
+  window.scrollTo(0, 0);
 
   const getSubtotal = () => {
     return getCartTotal()

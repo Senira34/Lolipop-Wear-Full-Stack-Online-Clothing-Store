@@ -189,6 +189,59 @@ function Navbar() {
         <Link to="/contact" onClick={() => setMenuOpen(false)}>
           Contact Us
         </Link>
+        
+        {/* Mobile Cart Link */}
+        <Link to="/cart" onClick={() => setMenuOpen(false)} className="flex items-center gap-2">
+          Cart
+          {getCartItemCount() > 0 && (
+            <span className="bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+              {getCartItemCount()}
+            </span>
+          )}
+        </Link>
+
+        {/* Mobile User Menu */}
+        {user ? (
+          <>
+            <div className="border-t border-white/20 pt-4 w-full text-center">
+              <p className="text-sm opacity-70">Logged in as</p>
+              <p className="font-semibold">{user.name}</p>
+            </div>
+            <Link to="/profile" onClick={() => setMenuOpen(false)}>
+              My Profile
+            </Link>
+            {!isAdmin() && (
+              <Link to="/my-orders" onClick={() => setMenuOpen(false)}>
+                My Orders
+              </Link>
+            )}
+            {isAdmin() && (
+              <Link to="/admin/dashboard" onClick={() => setMenuOpen(false)} className="text-purple-300">
+                Admin Dashboard
+              </Link>
+            )}
+            <button 
+              onClick={() => {
+                logout()
+                setMenuOpen(false)
+              }}
+              className="px-6 py-2.5 bg-red-600 hover:bg-red-700 rounded-full"
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <button 
+            onClick={() => {
+              setMenuOpen(false)
+              setLoginOpen(true)
+            }}
+            className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 rounded-full"
+          >
+            Sign in
+          </button>
+        )}
+
         <button id="close-menu" onClick={() => setMenuOpen(false)} className="active:ring-3 active:ring-white aspect-square size-10 p-1 items-center justify-center bg-white hover:bg-slate-200 transition text-black rounded-md flex">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
         </button>

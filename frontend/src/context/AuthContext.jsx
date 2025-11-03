@@ -36,6 +36,15 @@ export const AuthProvider = ({ children }) => {
     setUser(userData);
   };
 
+  // Update user function
+  const updateUser = (userData) => {
+    // Update localStorage
+    const currentUser = getCurrentUser();
+    const updatedUser = { ...currentUser, ...userData };
+    localStorage.setItem('userInfo', JSON.stringify(updatedUser));
+    setUser(updatedUser);
+  };
+
   // Logout function
   const logout = () => {
     logoutUser();
@@ -56,6 +65,7 @@ export const AuthProvider = ({ children }) => {
     user,
     loading,
     login,
+    updateUser,
     logout,
     isAdmin,
     isAuthenticated

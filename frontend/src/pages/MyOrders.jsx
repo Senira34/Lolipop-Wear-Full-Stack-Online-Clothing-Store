@@ -22,7 +22,9 @@ const MyOrders = () => {
     if (!user) {
       navigate('/login')
       return
+       
     }
+    window.scrollTo(0, 0);
 
     // Check if redirected from successful payment
     if (location.state?.showSuccess) {
